@@ -1,4 +1,4 @@
-package ru.madrabit.barbell;
+package ru.madrabit.strategy;
 
 import org.junit.Test;
 import ru.madrabit.strategy.Strategy;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 
 public class StrategyTest {
     /**
-     * Test barbell weight
+     * Test
      */
 
     @Test

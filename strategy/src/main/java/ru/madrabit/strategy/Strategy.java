@@ -1,7 +1,7 @@
 package ru.madrabit.strategy;
 
 /**
- * Calc for optimal barbell weight.
+ * Calc for optimal strategy weight.
  * @author Madrabit
  */
 
