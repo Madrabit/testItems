@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
-        <module>barbell</module>
+        <module>strategy</module>
     </modules>
 
 
