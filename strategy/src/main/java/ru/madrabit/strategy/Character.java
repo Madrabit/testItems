@@ -14,11 +14,15 @@ class Character {
     }
 
     void attack(Character enemy) {
-        enemy.hp -= damage;
+        enemy.hp = enemy.hp - damage;
     }
 
-    int getHp() {
+    public int getHp() {
         return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
     void setDamage(int damage) {
