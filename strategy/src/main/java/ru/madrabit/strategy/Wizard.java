@@ -1,48 +1,35 @@
 package ru.madrabit.strategy;
 
 class Wizard extends Character {
-    private int buff;
 
-    private void setBuff(int buff) {
-        this.buff = buff;
-    }
-
-    private int getBuff() {
-        return buff;
-    }
-
+    private final boolean cast;
 
     Wizard(String race) {
         switch (race) {
             case "elf":
-                setBuff(5);
+                cast = true;
                 setDamage(10);
                 break;
             case "human":
-                setBuff(3);
+                cast = true;
                 setDamage(4);
                 break;
             case "ork":
-                setBuff(2);
+                cast = true;
                 setDamage(0);
                 break;
             case "undead":
-                setBuff(5);
+                cast = false;
                 setDamage(5);
                 break;
             default:
-                setBuff(0);
+                cast = false;
                 setDamage(0);
                 break;
         }
     }
 
     void castSpell(Character pers) {
-        pers.setDamage(pers.getDamage() + getBuff());
-
-    }
-
-    public void castCurse(Character pers) {
-        pers.setDamage(pers.getDamage() - getBuff());
+        pers.setPrivilege(cast);
     }
 }

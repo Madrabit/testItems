@@ -9,9 +9,9 @@ class Squad {
     Squad(String race) {
         squad = new ArrayList<>();
         squad.add(new Wizard(race));
-        squad.add(new Archer());
-        squad.add(new Archer());
-        squad.add(new Archer());
+        squad.add(new Archer(race));
+        squad.add(new Archer(race));
+        squad.add(new Archer(race));
         squad.add(new Fighter(race));
         squad.add(new Fighter(race));
         squad.add(new Fighter(race));

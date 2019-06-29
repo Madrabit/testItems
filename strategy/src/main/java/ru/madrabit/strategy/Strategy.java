@@ -29,6 +29,7 @@ class Strategy {
 
         System.out.println(orcs.squad.get(6).getHp());
 
+
     }
 
 }

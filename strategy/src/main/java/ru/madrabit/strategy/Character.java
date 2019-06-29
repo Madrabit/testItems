@@ -4,6 +4,7 @@ class Character {
     private int hp = 100;
     private int damage;
     private String attackName;
+    private boolean privilege;
 
     void setAttackName(String attackName) {
         this.attackName = attackName;
@@ -14,7 +15,14 @@ class Character {
     }
 
     void attack(Character enemy) {
-        enemy.hp = enemy.hp - damage;
+        if (privilege) {
+            damage *= 1.5;
+            enemy.hp = enemy.hp - damage;
+            setPrivilege(false);
+            damage /= 1.5;
+        } else {
+            enemy.hp = enemy.hp - damage;
+        }
     }
 
     public int getHp() {
@@ -26,10 +34,19 @@ class Character {
     }
 
     void setDamage(int damage) {
+
         this.damage = damage;
     }
 
     int getDamage() {
         return damage;
+    }
+
+    public void setPrivilege(boolean privilege) {
+        this.privilege = privilege;
+    }
+
+    public boolean getPrivilege() {
+        return privilege;
     }
 }
