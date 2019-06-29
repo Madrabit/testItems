@@ -1,18 +1,21 @@
 package ru.madrabit.strategy;
 
+import java.util.ArrayList;
+
 class Squad {
     private String race;
 
+    ArrayList<Character> squad = new ArrayList<>();
 
-    public Squad (String race) {
+    public Squad(String race) {
         this.race = race;
-        Character mage = new Mage(race);
-        Character arch_1 = new Archer();
-        Character arch_2 = new Archer();
-        Character arch_3 = new Archer();
-        Character fighter_1 = new Fighter();
-        Character fighter_2 = new Fighter();
-        Character fighter_3 = new Fighter();
-        Character fighter_4 = new Fighter();
+        squad.add(new Wizard(race));
+        squad.add(new Archer());
+        squad.add(new Archer());
+        squad.add(new Archer());
+        squad.add(new Fighter(race));
+        squad.add(new Fighter(race));
+        squad.add(new Fighter(race));
+        squad.add(new Fighter(race));
     }
 }
