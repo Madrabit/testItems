@@ -3,29 +3,29 @@ package ru.madrabit.strategy;
 class Character {
     private int hp = 100;
     private int damage;
-    private String atackName;
+    private String attackName;
 
-    public void setAtackName(String atackName) {
-        this.atackName = atackName;
+    void setAttackName(String attackName) {
+        this.attackName = attackName;
     }
 
-    public String getAtackName() {
-        return atackName;
+    String getAttackName() {
+        return attackName;
     }
 
-    public void atack( Character enemy) {
+    void attack(Character enemy) {
         enemy.hp -= damage;
     }
 
-    public int getHp() {
+    int getHp() {
         return hp;
     }
 
-    public void setDamage(int damage) {
+    void setDamage(int damage) {
         this.damage = damage;
     }
 
-    public int getDamage() {
+    int getDamage() {
         return damage;
     }
 }

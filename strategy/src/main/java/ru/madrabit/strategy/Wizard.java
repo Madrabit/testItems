@@ -3,16 +3,16 @@ package ru.madrabit.strategy;
 class Wizard extends Character {
     private int buff;
 
-    public void setBuff(int buff) {
+    private void setBuff(int buff) {
         this.buff = buff;
     }
 
-    public int getBuff() {
+    private int getBuff() {
         return buff;
     }
 
 
-    protected Wizard(String race) {
+    Wizard(String race) {
         switch (race) {
             case "elf":
                 setBuff(5);
@@ -37,12 +37,12 @@ class Wizard extends Character {
         }
     }
 
-    public void castSpell( Character pers) {
+    void castSpell(Character pers) {
         pers.setDamage(pers.getDamage() + getBuff());
 
     }
 
-    public void castCurse( Character pers) {
+    public void castCurse(Character pers) {
         pers.setDamage(pers.getDamage() - getBuff());
     }
 }

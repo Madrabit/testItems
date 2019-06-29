@@ -1,26 +1,26 @@
 package ru.madrabit.strategy;
 
 class Fighter extends Character {
-    protected Fighter(String race) {
+    Fighter(String race) {
         switch (race) {
             case "elf":
                 setDamage(15);
-                setAtackName("атака мечом");
+                setAttackName("атака мечом");
                 break;
             case "human":
                 setDamage(18);
-                setAtackName("атака мечом");
+                setAttackName("атака мечом");
                 break;
             case "orc":
                 setDamage(20);
-                setAtackName("атака дубиной");
+                setAttackName("атака дубиной");
                 break;
             case "undead":
                 setDamage(18);
-                setAtackName("удар копьем");
+                setAttackName("удар копьем");
                 break;
             default:
-                setAtackName("атака");
+                setAttackName("атака");
                 setDamage(0);
                 break;
         }

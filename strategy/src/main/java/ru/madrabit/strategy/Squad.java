@@ -3,12 +3,11 @@ package ru.madrabit.strategy;
 import java.util.ArrayList;
 
 class Squad {
-    private String race;
 
-    ArrayList<Character> squad = new ArrayList<>();
+    final ArrayList<Character> squad;
 
-    public Squad(String race) {
-        this.race = race;
+    Squad(String race) {
+        squad = new ArrayList<>();
         squad.add(new Wizard(race));
         squad.add(new Archer());
         squad.add(new Archer());

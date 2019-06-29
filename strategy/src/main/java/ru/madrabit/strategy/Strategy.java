@@ -5,7 +5,7 @@ package ru.madrabit.strategy;
  * @author Madrabit
  */
 
-public class Strategy {
+class Strategy {
 
     /**
      * Main
@@ -22,10 +22,10 @@ public class Strategy {
 
         System.out.println(orcs.squad.get(6).getHp());
 
-        System.out.println(fighter.getAtackName());
+        System.out.println(fighter.getAttackName());
 
         wiz.castSpell(fighter);
-        fighter.atack(orcs.squad.get(6));
+        fighter.attack(orcs.squad.get(6));
 
         System.out.println(orcs.squad.get(6).getHp());
 
