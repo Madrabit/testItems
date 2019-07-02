@@ -21,9 +21,6 @@ class Strategy {
 
     public static void main(String[] args) {
 
-        Random rand = new Random();
-        int n = rand.nextInt(1);
-
         int randomLight = (int) (Math.round(Math.random()));
         int randomDark = (int) (Math.round(Math.random()));
 
@@ -49,9 +46,6 @@ class Strategy {
 
         while (firstSquad.squad.size() > 0 && secondSquad.squad.size() > 0) {
 
-//        for(int i = 0; i < 15; i++) {
-
-
             firstSquad = turn ? lightSquad : darkSquad;
             secondSquad = turn ? darkSquad : lightSquad;
 
@@ -59,7 +53,9 @@ class Strategy {
             System.out.println();
 
             for (Character character : firstSquad.squad) {
-                if(secondSquad.squad.size() == 0) break;
+                if (secondSquad.squad.size() == 0) {
+                    break;
+                }
 
                 System.out.println(character.getCharName());
                 System.out.println("Персонаж " + character.getCharName()
@@ -69,6 +65,12 @@ class Strategy {
 
                 randomEnemy = (int) (Math.random() * secondSquad.squad.size());
                 Character enemy = secondSquad.squad.get(randomEnemy);
+
+                if(!(character.getClass() == Fighter.class)){
+                    Random rand = new Random();
+                    int n = rand.nextInt(2);
+
+                }
 
                 character.attack(enemy);
 
@@ -99,15 +101,10 @@ class Strategy {
                 }
             }
 
-
-
             System.out.println();
 
             turn =  turn ? false :  true;
         }
-
-
-
 
 
     }
