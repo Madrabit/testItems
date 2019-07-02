@@ -15,13 +15,11 @@ class Strategy {
      * @param args - args
      */
 
+
     static String[] lightRaces = new String[]{"elf", "human"};
     static String[] darkRaces = new String[]{"orc", "undead"};
 
     public static void main(String[] args) {
-        Squad orcs = new Squad("orc");
-        Squad humans = new Squad("human");
-        Squad undead = new Squad("undead");
 
         Random rand = new Random();
         int n = rand.nextInt(1);
@@ -32,34 +30,84 @@ class Strategy {
         Squad lightSquad = new Squad(lightRaces[randomLight]);
         Squad darkSquad = new Squad(darkRaces[randomDark]);
 
+        /* TODO Сделать чтобы нормальные названия были на русском у отрядов */
         System.out.println("Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace());
 
         int randomEnemy;
 
-        for (Character character : lightSquad.squad) {
-            System.out.println(character.getCharName());
-            System.out.println("Персонаж " + character.getClass().getName() + " наносит удар " + character.getAttackName()
-                    + " - " + character.getDamage() + " урона");
 
-            randomEnemy = (int) (Math.random() * 4);
-            character.attack(darkSquad.squad.get(randomEnemy));
-            System.out.println("В лицо " + darkSquad.squad.get(randomEnemy).getClass().getName());
-            System.out.println("У " + darkSquad.squad.get(randomEnemy).getClass().getName() + " осталость "
-                    + darkSquad.squad.get(randomEnemy).getHp() + " hp");
+        /* TODO Сделать через Итератор
+        *  TODO реализовать метод мага *1.5 к дамагу
+        *  TODO вызов рандомного выбора атаки у перса
+        *  TODO если у перса HP меньше 0 убрать его из сквада
+        *
+        * */
+
+        boolean turn = false;
+        Squad firstSquad = lightSquad;
+        Squad secondSquad = darkSquad;
+
+        while (firstSquad.squad.size() > 0 && secondSquad.squad.size() > 0) {
+
+//        for(int i = 0; i < 15; i++) {
+
+
+            firstSquad = turn ? lightSquad : darkSquad;
+            secondSquad = turn ? darkSquad : lightSquad;
+
+            System.out.println("Ходят " + firstSquad.getRace());
             System.out.println();
+
+            for (Character character : firstSquad.squad) {
+                if(secondSquad.squad.size() == 0) break;
+
+                System.out.println(character.getCharName());
+                System.out.println("Персонаж " + character.getCharName()
+                        + " наносит удар "
+                        + character.getAttackName()
+                        + " - " + character.getDamage() + " урона");
+
+                randomEnemy = (int) (Math.random() * secondSquad.squad.size());
+                Character enemy = secondSquad.squad.get(randomEnemy);
+
+                character.attack(enemy);
+
+                if (enemy.getHp() <= 0) {
+                    System.out.println(enemy.getCharName() + " - Убит!");
+                    secondSquad.squad.remove(enemy);
+
+                }
+
+
+                System.out.println("В лицо " + enemy.getCharName());
+                System.out.println("У " + enemy.getCharName() + " осталость "
+                        + enemy.getHp() + " hp");
+                System.out.println();
+            }
+
+
+
+            if (secondSquad.squad.size() == 0) {
+                System.out.println("Все " + secondSquad.getRace() + " мертвы");
+                System.out.println("Победили " + firstSquad.getRace());
+                break;
+            } else {
+                System.out.println("Статистика здоровья врага " + secondSquad.getRace() + " :");
+
+                for (Character character : secondSquad.squad) {
+                    System.out.println(character.getCharName() + " : " + character.getHp());
+                }
+            }
+
+
+
+            System.out.println();
+
+            turn =  turn ? false :  true;
         }
 
-        Wizard wiz = (Wizard) humans.squad.get(0);
-        Character fighter = humans.squad.get(6);
 
-        System.out.println(orcs.squad.get(6).getHp());
 
-        System.out.println(fighter.getAttackName());
-
-        wiz.castSpell(fighter);
-        fighter.attack(orcs.squad.get(6));
-
-        System.out.println(orcs.squad.get(6).getHp());
 
 
     }

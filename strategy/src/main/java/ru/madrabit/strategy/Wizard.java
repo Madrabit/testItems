@@ -4,7 +4,8 @@ class Wizard extends Character {
 
     private final boolean cast;
 
-    Wizard(String race) {
+    Wizard(String race, String name) {
+        setCharName(name);
         switch (race) {
             case "elf":
                 cast = true;

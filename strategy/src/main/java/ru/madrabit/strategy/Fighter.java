@@ -1,7 +1,8 @@
 package ru.madrabit.strategy;
 
 class Fighter extends Character {
-    Fighter(String race) {
+    Fighter(String race, String name) {
+        setCharName(name);
         switch (race) {
             case "elf":
                 setDamage(15);
