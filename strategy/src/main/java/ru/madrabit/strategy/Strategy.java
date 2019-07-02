@@ -1,5 +1,6 @@
 package ru.madrabit.strategy;
 
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -25,13 +26,28 @@ class Strategy {
         Random rand = new Random();
         int n = rand.nextInt(1);
 
-        int random = (int)(Math.round(Math.random()));
+        int randomLight = (int) (Math.round(Math.random()));
+        int randomDark = (int) (Math.round(Math.random()));
 
-        Squad lightSquade = new Squad(lightRaces[random]);
-        Squad darkSquade = new Squad(darkRaces[random]);
+        Squad lightSquad = new Squad(lightRaces[randomLight]);
+        Squad darkSquad = new Squad(darkRaces[randomDark]);
 
-        System.out.println(lightSquade);
-        System.out.println(darkSquade);
+        System.out.println("Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace());
+
+        int randomEnemy;
+
+        for (Character character : lightSquad.squad) {
+            System.out.println(character.getCharName());
+            System.out.println("Персонаж " + character.getClass().getName() + " наносит удар " + character.getAttackName()
+                    + " - " + character.getDamage() + " урона");
+
+            randomEnemy = (int) (Math.random() * 4);
+            character.attack(darkSquad.squad.get(randomEnemy));
+            System.out.println("В лицо " + darkSquad.squad.get(randomEnemy).getClass().getName());
+            System.out.println("У " + darkSquad.squad.get(randomEnemy).getClass().getName() + " осталость "
+                    + darkSquad.squad.get(randomEnemy).getHp() + " hp");
+            System.out.println();
+        }
 
         Wizard wiz = (Wizard) humans.squad.get(0);
         Character fighter = humans.squad.get(6);

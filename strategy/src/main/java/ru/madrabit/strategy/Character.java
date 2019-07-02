@@ -5,6 +5,7 @@ class Character {
     private int damage;
     private String attackName;
     private boolean privilege;
+    private String name;
 
     void setAttackName(String attackName) {
         this.attackName = attackName;
@@ -48,5 +49,13 @@ class Character {
 
     public boolean getPrivilege() {
         return privilege;
+    }
+
+    public String getCharName() {
+        return name;
+    }
+
+    public void setCharName(String name) {
+        this.name = name;
     }
 }

@@ -4,7 +4,8 @@ class Archer extends Character {
     private String secondaryAttack;
     private int secondDamage;
 
-    Archer(String race) {
+    Archer(String race, String name) {
+        setCharName(name);
         switch (race) {
             case "elf":
                 setDamage(7);
