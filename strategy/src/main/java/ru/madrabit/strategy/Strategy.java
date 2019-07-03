@@ -1,6 +1,5 @@
 package ru.madrabit.strategy;
 
-import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -41,79 +40,79 @@ class Strategy {
         * */
 
         boolean turn = false;
-        Squad firstSquad = lightSquad;
-        Squad secondSquad = darkSquad;
+        Squad attacker = lightSquad;
+        Squad defender = darkSquad;
 
-        while (firstSquad.squad.size() > 0 && secondSquad.squad.size() > 0) {
+        while (attacker.squad.size() > 0 && defender.squad.size() > 0) {
 
-            firstSquad = turn ? lightSquad : darkSquad;
-            secondSquad = turn ? darkSquad : lightSquad;
+            attacker = turn ? lightSquad : darkSquad;
+            defender = turn ? darkSquad : lightSquad;
 
-            System.out.println("Ходят " + firstSquad.getRace());
+            System.out.println("Ходят " + attacker.getRace());
             System.out.println();
 
-            for (Character character : firstSquad.squad) {
-                if (secondSquad.squad.size() == 0) {
+            for (Character character : attacker.squad) {
+                if (defender.squad.size() == 0) {
                     break;
                 }
 
                 System.out.println(character.getCharName());
 
 
-                randomEnemy = (int) (Math.random() * secondSquad.squad.size());
-                Character enemy = secondSquad.squad.get(randomEnemy);
+                randomEnemy = (int) (Math.random() * defender.squad.size());
+                Character enemy = defender.squad.get(randomEnemy);
 
-                if (character.getClass() == Wizard.class) {
-                    Random rand = new Random();
-                    int n = rand.nextInt(2);
+                if (!(character.getClass() == Fighter.class)) {
+
+                    int n = randCoin();
+
                     if (n == 0) {
-                        character.attack(enemy);
-                        System.out.println("Колдун " + character.getCharName()
+                        simpleAttack(character, enemy);
+                    } else if (character.getClass() == Archer.class){
+                        ((Archer)character).secondAttack(enemy);
+                        System.out.println(character.getCharName()
                                 + " наносит удар "
-                                + character.getAttackName()
-                                + " - " + character.getDamage() + " урона");
+                                + ((Archer)character).getSecondaryAttackName()
+                                + " - " + ((Archer)character).getSecondDamage() + " урона");
                         System.out.println("В лицо " + enemy.getCharName());
                         System.out.println("У " + enemy.getCharName() + " осталость "
                                 + enemy.getHp() + " hp");
                         System.out.println();
                     } else {
-                        ((Wizard) character).castSpell(enemy);
-                        int randomFriend = (int) (Math.random() * firstSquad.squad.size());
-                        Character friend = firstSquad.squad.get(randomFriend);
+
+                        int randomFriend = (int) (Math.random() * attacker.squad.size());
+                        Character friend = attacker.squad.get(randomFriend);
+                        ((Wizard) character).castSpell(friend);
+
                         System.out.println(character.getCharName()
                                 + " накладывает усиление на "
                                 + friend.getCharName()
                                 + " и его урон становится равен " + friend.getDamage() + " урона");
+
                         System.out.println();
                     }
-
                 } else {
-                    boolean privilege = false;
-                    if (character.getPrivilege()) {
-                        System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + character.getDamage());
-                        privilege = true;
-                    }
+                    boolean privilege;
 
+                    privilege = checkPrivilege(character, false);
 
                     System.out.println("В лицо " + enemy.getCharName() + " прилетает удар " + character.getAttackName()
-                            + " c cилой " + character.getDamage());
+                            + " силой " + character.getDamage());
 
                     System.out.println("У " + enemy.getCharName() + " осталость "
                             + enemy.getHp() + " hp");
 
                     character.attack(enemy);
 
-                    if (privilege) {
+                    quitePrivilege(character, privilege);
 
-                        System.out.println("Персонаж стал обычным и его урон теперь составляет: " + character.getDamage());
-                    }
                     System.out.println();
                 }
 
 
                 if (enemy.getHp() <= 0) {
                     System.out.println(enemy.getCharName() + " - Убит!");
-                    secondSquad.squad.remove(enemy);
+                    defender.squad.remove(enemy);
 
                 }
 
@@ -121,14 +120,14 @@ class Strategy {
 
 
 
-            if (secondSquad.squad.size() == 0) {
-                System.out.println("Все " + secondSquad.getRace() + " мертвы");
-                System.out.println("Победили " + firstSquad.getRace());
+            if (defender.squad.size() == 0) {
+                System.out.println("Все " + defender.getRace() + " мертвы");
+                System.out.println("Победили " + attacker.getRace());
                 break;
             } else {
-                System.out.println("Статистика здоровья врага " + secondSquad.getRace() + " :");
+                System.out.println("Статистика здоровья врага " + defender.getRace() + " :");
 
-                for (Character character : secondSquad.squad) {
+                for (Character character : defender.squad) {
                     System.out.println(character.getCharName() + " : " + character.getHp());
                 }
             }
@@ -138,6 +137,40 @@ class Strategy {
             turn =  turn ? false :  true;
         }
 
+    }
+
+    private static int randCoin() {
+        Random rand = new Random();
+        int n = rand.nextInt(2);
+        return n;
+    }
+
+    private static void simpleAttack(Character character, Character enemy) {
+        character.attack(enemy);
+        System.out.println(character.getCharName()
+                + " наносит удар "
+                + character.getAttackName()
+                + " - " + character.getDamage() + " урона");
+        System.out.println("В лицо " + enemy.getCharName());
+        System.out.println("У " + enemy.getCharName() + " осталость "
+                + enemy.getHp() + " hp");
+        System.out.println();
+    }
+
+    public static boolean checkPrivilege(Character character, boolean privilege) {
+        if (character.getPrivilege()) {
+            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + character.getDamage());
+            return true;
+        }
+
+        return false;
+    }
+
+    public static void quitePrivilege(Character character, boolean privilege) {
+        if (privilege) {
+
+            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + character.getDamage());
+        }
     }
 
 }

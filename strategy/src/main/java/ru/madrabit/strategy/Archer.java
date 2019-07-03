@@ -58,5 +58,17 @@ class Archer extends Character {
 
     public void secondAttack(Character enemy) {
         enemy.setHp(enemy.getHp() - secondDamage);
+        setPrivilege(false);
+    }
+
+    public void setPrivilege(boolean privilege) {
+        if (privilege) {
+            damage *= 1.5;
+
+        } else {
+            damage /= 1.5;
+        }
+
+        this.privilege = privilege;
     }
 }
