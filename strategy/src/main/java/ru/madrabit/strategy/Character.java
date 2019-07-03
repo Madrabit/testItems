@@ -17,10 +17,10 @@ class Character {
 
     void attack(Character enemy) {
         if (privilege) {
-            damage *= 1.5;
+
             enemy.hp = enemy.hp - damage;
             setPrivilege(false);
-            damage /= 1.5;
+
         } else {
             enemy.hp = enemy.hp - damage;
         }
@@ -44,6 +44,13 @@ class Character {
     }
 
     public void setPrivilege(boolean privilege) {
+        if (privilege) {
+            damage *= 1.5;
+
+        } else {
+            damage /= 1.5;
+        }
+
         this.privilege = privilege;
     }
 

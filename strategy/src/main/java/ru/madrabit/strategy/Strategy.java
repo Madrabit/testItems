@@ -58,21 +58,58 @@ class Strategy {
                 }
 
                 System.out.println(character.getCharName());
-                System.out.println("Персонаж " + character.getCharName()
-                        + " наносит удар "
-                        + character.getAttackName()
-                        + " - " + character.getDamage() + " урона");
+
 
                 randomEnemy = (int) (Math.random() * secondSquad.squad.size());
                 Character enemy = secondSquad.squad.get(randomEnemy);
 
-                if(!(character.getClass() == Fighter.class)){
+                if (character.getClass() == Wizard.class) {
                     Random rand = new Random();
                     int n = rand.nextInt(2);
+                    if (n == 0) {
+                        character.attack(enemy);
+                        System.out.println("Колдун " + character.getCharName()
+                                + " наносит удар "
+                                + character.getAttackName()
+                                + " - " + character.getDamage() + " урона");
+                        System.out.println("В лицо " + enemy.getCharName());
+                        System.out.println("У " + enemy.getCharName() + " осталость "
+                                + enemy.getHp() + " hp");
+                        System.out.println();
+                    } else {
+                        ((Wizard) character).castSpell(enemy);
+                        int randomFriend = (int) (Math.random() * firstSquad.squad.size());
+                        Character friend = firstSquad.squad.get(randomFriend);
+                        System.out.println(character.getCharName()
+                                + " накладывает усиление на "
+                                + friend.getCharName()
+                                + " и его урон становится равен " + friend.getDamage() + " урона");
+                        System.out.println();
+                    }
 
+                } else {
+                    boolean privilege = false;
+                    if (character.getPrivilege()) {
+                        System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + character.getDamage());
+                        privilege = true;
+                    }
+
+
+                    System.out.println("В лицо " + enemy.getCharName() + " прилетает удар " + character.getAttackName()
+                            + " c cилой " + character.getDamage());
+
+                    System.out.println("У " + enemy.getCharName() + " осталость "
+                            + enemy.getHp() + " hp");
+
+                    character.attack(enemy);
+
+                    if (privilege) {
+
+                        System.out.println("Персонаж стал обычным и его урон теперь составляет: " + character.getDamage());
+                    }
+                    System.out.println();
                 }
 
-                character.attack(enemy);
 
                 if (enemy.getHp() <= 0) {
                     System.out.println(enemy.getCharName() + " - Убит!");
@@ -80,11 +117,6 @@ class Strategy {
 
                 }
 
-
-                System.out.println("В лицо " + enemy.getCharName());
-                System.out.println("У " + enemy.getCharName() + " осталость "
-                        + enemy.getHp() + " hp");
-                System.out.println();
             }
 
 
@@ -105,7 +137,6 @@ class Strategy {
 
             turn =  turn ? false :  true;
         }
-
 
     }
 
