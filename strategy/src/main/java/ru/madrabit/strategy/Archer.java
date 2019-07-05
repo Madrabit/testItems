@@ -1,8 +1,9 @@
 package ru.madrabit.strategy;
 
-class Archer extends Character {
+class Archer extends Character implements SecondAttack {
     private String secondaryAttack;
     private int secondDamage;
+    private boolean privilege;
 
     Archer(String race, String name) {
         setCharName(name);
@@ -57,16 +58,34 @@ class Archer extends Character {
     }
 
     public void secondAttack(Character enemy) {
-        enemy.setHp(enemy.getHp() - secondDamage);
-        setPrivilege(false);
-    }
-
-    public void setPrivilege(boolean privilege) {
         if (privilege) {
-            damage *= 1.5;
+            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + getSecondDamage());
+            System.out.println(getCharName()
+                    + " наносит особый удар "
+                    + getSecondaryAttackName()
+                    + " - " + getSecondDamage() + " урона");
+            System.out.println("В лицо " + enemy.getCharName());
+            enemy.setHp(enemy.getHp() - secondDamage);
+
+            setPrivilege(false);
+            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + getSecondDamage());
+
 
         } else {
-            damage /= 1.5;
+            enemy.setHp(enemy.getHp() - secondDamage);
+        }
+
+    }
+
+    @Override
+    public void setPrivilege(boolean privilege) {
+        if (privilege) {
+            setDamage((int) (getDamage() * 1.5));
+            setSecondDamage((int) (getSecondDamage() * 1.5));
+
+        } else {
+            setDamage((int) (getDamage() / 1.5));
+            setSecondDamage((int) (getSecondDamage() / 1.5));
         }
 
         this.privilege = privilege;

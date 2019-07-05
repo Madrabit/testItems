@@ -1,6 +1,8 @@
 package ru.madrabit.strategy;
 
+import java.io.PrintStream;
 import java.util.Random;
+import java.io.*;
 
 /**
  * Calc for optimal strategy weight.
@@ -18,7 +20,10 @@ class Strategy {
     static String[] lightRaces = new String[]{"elf", "human"};
     static String[] darkRaces = new String[]{"orc", "undead"};
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException  {
+
+        PrintStream fileOut = new PrintStream(new FileOutputStream("out.txt"));
+        System.setOut(fileOut);
 
         int randomLight = (int) (Math.round(Math.random()));
         int randomDark = (int) (Math.round(Math.random()));
@@ -27,21 +32,21 @@ class Strategy {
         Squad darkSquad = new Squad(darkRaces[randomDark]);
 
         /* TODO Сделать чтобы нормальные названия были на русском у отрядов */
+        System.out.println();
         System.out.println("Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace());
+        System.out.println();
 
         int randomEnemy;
 
 
         /* TODO Сделать через Итератор
-        *  TODO реализовать метод мага *1.5 к дамагу
-        *  TODO вызов рандомного выбора атаки у перса
-        *  TODO если у перса HP меньше 0 убрать его из сквада
         *
         * */
 
         boolean turn = false;
         Squad attacker = lightSquad;
         Squad defender = darkSquad;
+        int move = 0;
 
         while (attacker.squad.size() > 0 && defender.squad.size() > 0) {
 
@@ -49,6 +54,7 @@ class Strategy {
             defender = turn ? darkSquad : lightSquad;
 
             System.out.println("Ходят " + attacker.getRace());
+            System.out.println("Ход №" + ++move);
             System.out.println();
 
             for (Character character : attacker.squad) {
@@ -68,13 +74,9 @@ class Strategy {
 
                     if (n == 0) {
                         simpleAttack(character, enemy);
-                    } else if (character.getClass() == Archer.class){
-                        ((Archer)character).secondAttack(enemy);
-                        System.out.println(character.getCharName()
-                                + " наносит удар "
-                                + ((Archer)character).getSecondaryAttackName()
-                                + " - " + ((Archer)character).getSecondDamage() + " урона");
-                        System.out.println("В лицо " + enemy.getCharName());
+                    } else if (character.getClass() == Archer.class) {
+                        ((Archer) character).secondAttack(enemy);
+
                         System.out.println("У " + enemy.getCharName() + " осталость "
                                 + enemy.getHp() + " hp");
                         System.out.println();
@@ -92,19 +94,10 @@ class Strategy {
                         System.out.println();
                     }
                 } else {
-                    boolean privilege;
-
-                    privilege = checkPrivilege(character, false);
-
-                    System.out.println("В лицо " + enemy.getCharName() + " прилетает удар " + character.getAttackName()
-                            + " силой " + character.getDamage());
-
-                    System.out.println("У " + enemy.getCharName() + " осталость "
-                            + enemy.getHp() + " hp");
 
                     character.attack(enemy);
-
-                    quitePrivilege(character, privilege);
+                    System.out.println("У " + enemy.getCharName() + " осталость "
+                            + enemy.getHp() + " hp");
 
                     System.out.println();
                 }
@@ -137,6 +130,9 @@ class Strategy {
             turn =  turn ? false :  true;
         }
 
+        System.setOut(System.out);
+
+
     }
 
     private static int randCoin() {
@@ -155,22 +151,6 @@ class Strategy {
         System.out.println("У " + enemy.getCharName() + " осталость "
                 + enemy.getHp() + " hp");
         System.out.println();
-    }
-
-    public static boolean checkPrivilege(Character character, boolean privilege) {
-        if (character.getPrivilege()) {
-            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + character.getDamage());
-            return true;
-        }
-
-        return false;
-    }
-
-    public static void quitePrivilege(Character character, boolean privilege) {
-        if (privilege) {
-
-            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + character.getDamage());
-        }
     }
 
 }

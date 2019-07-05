@@ -17,9 +17,13 @@ class Character {
 
     void attack(Character enemy) {
         if (privilege) {
-
+            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + getDamage());
             enemy.hp = enemy.hp - damage;
+            System.out.println("В лицо " + enemy.getCharName() + " прилетает удар " + getAttackName()
+                    + " силой " + getDamage());
             setPrivilege(false);
+            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + getDamage());
+
 
         } else {
             enemy.hp = enemy.hp - damage;
@@ -65,4 +69,6 @@ class Character {
     public void setCharName(String name) {
         this.name = name;
     }
+
+
 }

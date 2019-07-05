@@ -1,10 +1,11 @@
 package ru.madrabit.strategy;
 
-class Wizard extends Character {
+class Wizard extends Character implements SecondAttack {
 
     private final boolean cast;
     private String secondaryAttack;
     private int secondDamage;
+    private boolean privilege;
 
     Wizard(String race, String name) {
         setCharName(name);
@@ -56,6 +57,27 @@ class Wizard extends Character {
     }
 
     public void secondAttack(Character enemy) {
-        enemy.setHp(enemy.getHp() - secondDamage);
+        if (privilege) {
+            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + getDamage());
+            enemy.setHp(enemy.getHp() - secondDamage);
+            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + getDamage());
+            setPrivilege(false);
+        } else {
+            enemy.setHp(enemy.getHp() - secondDamage);
+        }
+    }
+
+    @Override
+    public void setPrivilege(boolean privilege) {
+        if (privilege) {
+            setDamage((int) (getDamage() * 1.5));
+            setSecondDamage((int) (getSecondDamage() * 1.5));
+
+        } else {
+            setDamage((int) (getDamage() / 1.5));
+            setSecondDamage((int) (getSecondDamage() / 1.5));
+        }
+
+        this.privilege = privilege;
     }
 }
