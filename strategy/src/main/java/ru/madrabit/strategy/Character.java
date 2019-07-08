@@ -1,11 +1,16 @@
 package ru.madrabit.strategy;
 
-class Character {
+abstract class Character {
     private int hp = 100;
     private int damage;
     private String attackName;
     private boolean privilege;
     private String name;
+    private String secondaryAttack;
+    private int secondDamage;
+
+    SimpleAttackBehavior simpleAttack;
+    SpecialAttackBehavior specialAttack;
 
     void setAttackName(String attackName) {
         this.attackName = attackName;
@@ -13,21 +18,6 @@ class Character {
 
     String getAttackName() {
         return attackName;
-    }
-
-    void attack(Character enemy) {
-        if (privilege) {
-            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + getDamage());
-            enemy.hp = enemy.hp - damage;
-            System.out.println("В лицо " + enemy.getCharName() + " прилетает удар " + getAttackName()
-                    + " силой " + getDamage());
-            setPrivilege(false);
-            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + getDamage());
-
-
-        } else {
-            enemy.hp = enemy.hp - damage;
-        }
     }
 
     public int getHp() {
@@ -50,9 +40,11 @@ class Character {
     public void setPrivilege(boolean privilege) {
         if (privilege) {
             damage *= 1.5;
+            setSecondDamage((int) (getSecondDamage() * 1.5));
 
         } else {
             damage /= 1.5;
+            setSecondDamage((int) (getSecondDamage() / 1.5));
         }
 
         this.privilege = privilege;
@@ -66,9 +58,37 @@ class Character {
         return name;
     }
 
-    public void setCharName(String name) {
+    void setCharName(String name) {
         this.name = name;
     }
+
+
+    public String getSecondaryAttackName() {
+        return secondaryAttack;
+    }
+
+
+    public int getSecondDamage() {
+        return secondDamage;
+    }
+
+    void setSecondaryAttackName(String name) {
+        this.secondaryAttack = name;
+    }
+
+    void setSecondDamage(int damage) {
+        this.secondDamage = damage;
+    }
+
+
+    public void performSpecialAttack(Character enemy) {
+        specialAttack.attack(enemy,  this);
+    }
+
+    public void performSimpleAttack(Character enemy) {
+        simpleAttack.attack(enemy, this);
+    }
+
 
 
 }

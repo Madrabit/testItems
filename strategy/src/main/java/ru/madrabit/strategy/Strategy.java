@@ -1,6 +1,5 @@
 package ru.madrabit.strategy;
 
-import java.io.PrintStream;
 import java.util.Random;
 import java.io.*;
 
@@ -17,8 +16,8 @@ class Strategy {
      */
 
 
-    static String[] lightRaces = new String[]{"elf", "human"};
-    static String[] darkRaces = new String[]{"orc", "undead"};
+    private static final String[] lightRaces = new String[]{"elf", "human"};
+    private static final String[] darkRaces = new String[]{"orc", "undead"};
 
     public static void main(String[] args) throws FileNotFoundException  {
 
@@ -31,27 +30,24 @@ class Strategy {
         Squad lightSquad = new Squad(lightRaces[randomLight]);
         Squad darkSquad = new Squad(darkRaces[randomDark]);
 
-        /* TODO Сделать чтобы нормальные названия были на русском у отрядов */
-        System.out.println();
-        System.out.println("Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace());
-        System.out.println();
-
-        int randomEnemy;
-
-
-        /* TODO Сделать через Итератор
-        *
-        * */
-
         boolean turn = false;
         Squad attacker = lightSquad;
         Squad defender = darkSquad;
         int move = 0;
+        int randomEnemy;
+
+        /* TODO Сделать чтобы нормальные названия были на русском у отрядов */
+
+        System.out.println();
+        System.out.println("Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace());
+        System.out.println();
+
 
         while (attacker.squad.size() > 0 && defender.squad.size() > 0) {
 
             attacker = turn ? lightSquad : darkSquad;
             defender = turn ? darkSquad : lightSquad;
+
 
             System.out.println("Ходят " + attacker.getRace());
             System.out.println("Ход №" + ++move);
@@ -73,9 +69,10 @@ class Strategy {
                     int n = randCoin();
 
                     if (n == 0) {
-                        simpleAttack(character, enemy);
+                        character.performSimpleAttack(enemy);
                     } else if (character.getClass() == Archer.class) {
-                        ((Archer) character).secondAttack(enemy);
+                        System.out.println("Спец атака лучника");
+                        character.performSpecialAttack(enemy);
 
                         System.out.println("У " + enemy.getCharName() + " осталость "
                                 + enemy.getHp() + " hp");
@@ -95,7 +92,8 @@ class Strategy {
                     }
                 } else {
 
-                    character.attack(enemy);
+//                    character.attack(enemy);
+                    character.performSimpleAttack(enemy);
                     System.out.println("У " + enemy.getCharName() + " осталость "
                             + enemy.getHp() + " hp");
 
@@ -127,30 +125,18 @@ class Strategy {
 
             System.out.println();
 
-            turn =  turn ? false :  true;
+            turn =  !turn;
         }
 
         System.setOut(System.out);
+        System.out.println();
 
 
     }
 
     private static int randCoin() {
         Random rand = new Random();
-        int n = rand.nextInt(2);
-        return n;
-    }
-
-    private static void simpleAttack(Character character, Character enemy) {
-        character.attack(enemy);
-        System.out.println(character.getCharName()
-                + " наносит удар "
-                + character.getAttackName()
-                + " - " + character.getDamage() + " урона");
-        System.out.println("В лицо " + enemy.getCharName());
-        System.out.println("У " + enemy.getCharName() + " осталость "
-                + enemy.getHp() + " hp");
-        System.out.println();
+        return rand.nextInt(2);
     }
 
 }

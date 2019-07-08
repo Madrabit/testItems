@@ -1,19 +1,18 @@
 package ru.madrabit.strategy;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 class Squad {
 
     final ArrayList<Character> squad;
 
-    private String race;
+    private final String race;
 
 
     /* TODO Сделать индвидуальные имена для персонажей*/
     Squad(String race) {
         squad = new ArrayList<>();
-        squad.add(new Wizard(race, "Волшебник"));
+        squad.add(new Wizard(race));
         squad.add(new Archer(race, "Лучник №1"));
         squad.add(new Archer(race, "Лучник №2"));
         squad.add(new Archer(race, "Лучник №3"));
