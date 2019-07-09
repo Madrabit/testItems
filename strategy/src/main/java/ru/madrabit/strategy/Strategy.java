@@ -19,10 +19,11 @@ class Strategy {
     private static final String[] lightRaces = new String[]{"elf", "human"};
     private static final String[] darkRaces = new String[]{"orc", "undead"};
 
-    public static void main(String[] args) throws FileNotFoundException  {
+    public static void main(String[] args) throws IOException {
 
-        PrintStream fileOut = new PrintStream(new FileOutputStream("out.txt"));
-        System.setOut(fileOut);
+
+
+        StringBuffer output =  new StringBuffer();
 
         int randomLight = (int) (Math.round(Math.random()));
         int randomDark = (int) (Math.round(Math.random()));
@@ -37,10 +38,9 @@ class Strategy {
         int randomEnemy;
 
         /* TODO Сделать чтобы нормальные названия были на русском у отрядов */
-
-        System.out.println();
-        System.out.println("Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace());
-        System.out.println();
+        output.append("\n"
+                + "Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace()
+                + "\n");
 
 
         while (attacker.squad.size() > 0 && defender.squad.size() > 0) {
@@ -48,17 +48,18 @@ class Strategy {
             attacker = turn ? lightSquad : darkSquad;
             defender = turn ? darkSquad : lightSquad;
 
+            output.append("\n"
+                    + "Ходят " + attacker.getRace() + "\n"
+                    + "Ход №" + ++move
+                    + "\n\n");
 
-            System.out.println("Ходят " + attacker.getRace());
-            System.out.println("Ход №" + ++move);
-            System.out.println();
 
             for (Character character : attacker.squad) {
                 if (defender.squad.size() == 0) {
                     break;
                 }
 
-                System.out.println(character.getCharName());
+                output.append(character.getCharName() + "\n");
 
 
                 randomEnemy = (int) (Math.random() * defender.squad.size());
@@ -69,42 +70,34 @@ class Strategy {
                     int n = randCoin();
 
                     if (n == 0) {
-                        character.performSimpleAttack(enemy);
+                        output.append(character.performSimpleAttack(enemy) + "\n");
                     } else if (character.getClass() == Archer.class) {
-                        System.out.println("Спец атака лучника");
+                        output.append("Спец атака лучника" + "\n");
                         character.performSpecialAttack(enemy);
 
-                        System.out.println("У " + enemy.getCharName() + " осталость "
-                                + enemy.getHp() + " hp");
-                        System.out.println();
+                        output.append("У " + enemy.getCharName() + " осталость "
+                                + enemy.getHp() + " hp" + "\n\n");
+
                     } else {
 
                         int randomFriend = (int) (Math.random() * attacker.squad.size());
                         Character friend = attacker.squad.get(randomFriend);
                         ((Wizard) character).castSpell(friend);
 
-                        System.out.println(character.getCharName()
+                        output.append(character.getCharName()
                                 + " накладывает усиление на "
                                 + friend.getCharName()
-                                + " и его урон становится равен " + friend.getDamage() + " урона");
-
-                        System.out.println();
+                                + " и его урон становится равен " + friend.getDamage() + " урона" + "\n\n");
                     }
                 } else {
+                    output.append(character.performSimpleAttack(enemy));
 
-//                    character.attack(enemy);
-                    character.performSimpleAttack(enemy);
-                    System.out.println("У " + enemy.getCharName() + " осталость "
-                            + enemy.getHp() + " hp");
-
-                    System.out.println();
                 }
 
 
                 if (enemy.getHp() <= 0) {
-                    System.out.println(enemy.getCharName() + " - Убит!");
+                    output.append(enemy.getCharName() + " - Убит!" + "\n\n");
                     defender.squad.remove(enemy);
-
                 }
 
             }
@@ -112,24 +105,31 @@ class Strategy {
 
 
             if (defender.squad.size() == 0) {
-                System.out.println("Все " + defender.getRace() + " мертвы");
-                System.out.println("Победили " + attacker.getRace());
+                output.append("Все " + defender.getRace() + " мертвы"
+                        + "\n\n"
+                        + "Победили " + attacker.getRace() + "\n");
                 break;
             } else {
-                System.out.println("Статистика здоровья врага " + defender.getRace() + " :");
+                output.append("Статистика здоровья врага " + defender.getRace() + " :" + "\n");
 
                 for (Character character : defender.squad) {
-                    System.out.println(character.getCharName() + " : " + character.getHp());
+                    output.append(character.getCharName() + " : " + character.getHp() + "\n");
                 }
             }
 
-            System.out.println();
+            output.append("\n");
 
             turn =  !turn;
         }
 
-        System.setOut(System.out);
-        System.out.println();
+
+        BufferedWriter buffer = new BufferedWriter(new FileWriter(new File("out.txt")));
+        buffer.write(output.toString());
+
+        buffer.flush();
+        buffer.close();
+
+        System.out.println(output);
 
 
     }

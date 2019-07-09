@@ -1,5 +1,5 @@
 package ru.madrabit.strategy;
 
 interface SimpleAttackBehavior {
-    void attack(Character enemy,  Character pers);
+    StringBuffer attack(Character enemy,  Character pers);
 }

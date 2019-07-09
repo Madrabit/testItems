@@ -81,12 +81,12 @@ abstract class Character {
     }
 
 
-    public void performSpecialAttack(Character enemy) {
-        specialAttack.attack(enemy,  this);
+    public StringBuffer performSpecialAttack(Character enemy) {
+        return specialAttack.attack(enemy,  this);
     }
 
-    public void performSimpleAttack(Character enemy) {
-        simpleAttack.attack(enemy, this);
+    public StringBuffer performSimpleAttack(Character enemy) {
+        return simpleAttack.attack(enemy, this);
     }
 
 

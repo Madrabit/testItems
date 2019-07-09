@@ -2,32 +2,34 @@ package ru.madrabit.strategy;
 
 public class SimpleAttack implements SimpleAttackBehavior {
 
-    public void attack(Character enemy, Character pers) {
+    StringBuffer output =  new StringBuffer();
+
+    public StringBuffer attack(Character enemy, Character pers) {
 
         if (pers.getPrivilege()) {
-            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + pers.getDamage());
+            output.append("Персонаж в привелигерованной группе и его урон составляет: " + pers.getDamage() + "\n");
 
             enemy.setHp(enemy.getHp() - pers.getDamage());
 
-            System.out.println("В лицо " + enemy.getCharName() + " прилетает удар " + pers.getAttackName()
-                    + " силой " + pers.getDamage());
+            output.append("В лицо " + enemy.getCharName() + " прилетает удар " + pers.getAttackName()
+                    + " силой " + pers.getDamage() + "\n");
             pers.setPrivilege(false);
-            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + pers.getDamage());
+            output.append("Персонаж стал обычным и его урон теперь составляет: " + pers.getDamage() + "\n");
 
 
         } else {
             enemy.setHp(enemy.getHp() - pers.getDamage());
-            System.out.println(pers.getCharName()
+            output.append(pers.getCharName()
                     + " наносит удар "
                     + pers.getAttackName()
-                    + " - " + pers.getDamage() + " урона");
-            System.out.println("В лицо " + enemy.getCharName());
+                    + " - " + pers.getDamage() + " урона" + "\n");
+            output.append("В лицо " + enemy.getCharName() + "\n");
         }
 
-        System.out.println("У " + enemy.getCharName() + " осталость "
-                + enemy.getHp() + " hp");
-        System.out.println();
+        output.append("У " + enemy.getCharName() + " осталость "
+                + enemy.getHp() + " hp" + "\n\n");
 
+        return output;
 
     }
 

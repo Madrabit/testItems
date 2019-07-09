@@ -2,29 +2,33 @@ package ru.madrabit.strategy;
 
 public class SpecialAttack implements SpecialAttackBehavior {
 
+    StringBuffer output =  new StringBuffer();
+
     @Override
-    public void attack(Character enemy,  Character pers) {
+    public StringBuffer attack(Character enemy,  Character pers) {
         if (pers.getPrivilege()) {
-            System.out.println("Персонаж в привелигерованной группе и его урон составляет: " + pers.getSecondDamage());
-            System.out.println(pers.getCharName()
+            output.append("Персонаж в привелигерованной группе и его урон составляет: " + pers.getSecondDamage()
+            + "\n"  + pers.getCharName()
                     + " наносит особый удар "
                     + pers.getSecondaryAttackName()
-                    + " - " + pers.getSecondDamage() + " урона");
-            System.out.println("В лицо " + enemy.getCharName());
+                    + " - " + pers.getSecondDamage() + " урона"
+                    + "В лицо " + enemy.getCharName() + "\n");
             enemy.setHp(enemy.getHp() - pers.getSecondDamage());
 
             pers.setPrivilege(false);
-            System.out.println("Персонаж стал обычным и его урон теперь составляет: " + pers.getSecondDamage());
+            output.append("Персонаж стал обычным и его урон теперь составляет: " + pers.getSecondDamage() + "\n");
 
 
         } else {
-            System.out.println(pers.getCharName()
+            output.append(pers.getCharName()
                     + " наносит особый удар "
                     + pers.getSecondaryAttackName()
-                    + " - " + pers.getSecondDamage() + " урона");
-            System.out.println("В лицо " + enemy.getCharName());
+                    + " - " + pers.getSecondDamage() + " урона"
+                    + "В лицо " + enemy.getCharName() + "\n");
             enemy.setHp(enemy.getHp() - pers.getSecondDamage());
         }
+
+        return output;
 
     }
 
