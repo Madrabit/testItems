@@ -1,10 +1,11 @@
 package ru.madrabit.strategy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class Squad {
 
-    final ArrayList<Character> squad;
+    final List<Character> squad;
 
     private final String race;
 

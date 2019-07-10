@@ -16,8 +16,8 @@ class Strategy {
      */
 
 
-    private static final String[] lightRaces = new String[]{"elf", "human"};
-    private static final String[] darkRaces = new String[]{"orc", "undead"};
+    private static final String[] LIGHT = new String[]{"elf", "human"};
+    private static final String[] DARK = new String[]{"orc", "undead"};
 
     public static void main(String[] args) throws IOException {
 
@@ -28,8 +28,8 @@ class Strategy {
         int randomLight = (int) (Math.round(Math.random()));
         int randomDark = (int) (Math.round(Math.random()));
 
-        Squad lightSquad = new Squad(lightRaces[randomLight]);
-        Squad darkSquad = new Squad(darkRaces[randomDark]);
+        Squad lightSquad = new Squad(LIGHT[randomLight]);
+        Squad darkSquad = new Squad(DARK[randomDark]);
 
         boolean turn = false;
         Squad attacker = lightSquad;
@@ -65,13 +65,13 @@ class Strategy {
                 randomEnemy = (int) (Math.random() * defender.squad.size());
                 Character enemy = defender.squad.get(randomEnemy);
 
-                if (!(character.getClass() == Fighter.class)) {
+                if (!(character instanceof Fighter)) {
 
                     int n = randCoin();
 
                     if (n == 0) {
                         output.append(character.performSimpleAttack(enemy) + "\n");
-                    } else if (character.getClass() == Archer.class) {
+                    } else if (character instanceof Archer) {
                         output.append("Спец атака лучника" + "\n");
                         character.performSpecialAttack(enemy);
 
