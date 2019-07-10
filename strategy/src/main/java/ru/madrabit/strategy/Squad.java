@@ -9,7 +9,6 @@ class Squad {
 
     private final String race;
 
-
     /* TODO Сделать индвидуальные имена для персонажей*/
     Squad(String race) {
         squad = new ArrayList<>();

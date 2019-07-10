@@ -21,7 +21,7 @@ class Wizard extends Character {
                 setAttackName("выстрел из посоха");
                 setDamage(4);
                 break;
-            case "ork":
+            case "orс":
                 cast = true;
                 setAttackName("выстрел из посоха");
                 setDamage(0);

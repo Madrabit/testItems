@@ -1,5 +1,7 @@
 package ru.madrabit.strategy;
 
+import java.util.HashMap;
+
 abstract class Character {
     private int hp = 100;
     private int damage;
@@ -11,6 +13,9 @@ abstract class Character {
 
     SimpleAttackBehavior simpleAttack;
     SpecialAttackBehavior specialAttack;
+
+
+
 
     void setAttackName(String attackName) {
         this.attackName = attackName;

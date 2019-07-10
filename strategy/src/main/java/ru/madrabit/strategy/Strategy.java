@@ -1,5 +1,7 @@
 package ru.madrabit.strategy;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Random;
 import java.io.*;
 
@@ -14,10 +16,17 @@ class Strategy {
      * Main
      * @param args - args
      */
-
+    private static final HashMap<String, String> races = new HashMap<>() {
+        {
+            put("human", "Люди");
+            put("elf", "Эльфы");
+            put("ork", "Орки");
+            put("undead", "Мертвецы");
+        }
+    };
 
     private static final String[] LIGHT = new String[]{"elf", "human"};
-    private static final String[] DARK = new String[]{"orc", "undead"};
+    private static final String[] DARK = new String[]{"orс", "undead"};
 
     public static void main(String[] args) throws IOException {
 
@@ -37,11 +46,9 @@ class Strategy {
         int move = 0;
         int randomEnemy;
 
-        /* TODO Сделать чтобы нормальные названия были на русском у отрядов */
         output.append("\n"
-                + "Созданы два отряда: " + lightSquad.getRace() + " и " + darkSquad.getRace()
+                + "Созданы два отряда: " + races.get(lightSquad.getRace()) + " и " + races.get(darkSquad.getRace())
                 + "\n");
-
 
         while (attacker.squad.size() > 0 && defender.squad.size() > 0) {
 
@@ -49,7 +56,7 @@ class Strategy {
             defender = turn ? darkSquad : lightSquad;
 
             output.append("\n"
-                    + "Ходят " + attacker.getRace() + "\n"
+                    + "Ходят " + races.get(attacker.getRace()) + "\n"
                     + "Ход №" + ++move
                     + "\n\n");
 
@@ -105,12 +112,12 @@ class Strategy {
 
 
             if (defender.squad.size() == 0) {
-                output.append("Все " + defender.getRace() + " мертвы"
+                output.append("Все " + races.get(defender.getRace()) + " мертвы"
                         + "\n\n"
-                        + "Победили " + attacker.getRace() + "\n");
+                        + "Победили " + races.get(attacker.getRace()) + "\n");
                 break;
             } else {
-                output.append("Статистика здоровья врага " + defender.getRace() + " :" + "\n");
+                output.append("Статистика здоровья врага " + races.get(defender.getRace()) + " :" + "\n");
 
                 for (Character character : defender.squad) {
                     output.append(character.getCharName() + " : " + character.getHp() + "\n");
